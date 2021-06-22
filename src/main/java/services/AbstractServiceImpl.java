@@ -2,7 +2,6 @@ package services;
 
 import api.repositories.AbstractRepository;
 import api.services.AbstractService;
-import com.sun.xml.internal.bind.v2.model.core.ID;
 import exeptions.NoRecordException;
 import model.BaseEntity;
 
@@ -13,10 +12,29 @@ public abstract class AbstractServiceImpl<E extends BaseEntity>
 
     protected AbstractRepository<E> abstractRepository;
 
+    protected AbstractServiceImpl(AbstractRepository<E> abstractRepository) {
+        this.abstractRepository = abstractRepository;
+    }
+
+
+    @Override
+    public void update(E entity){
+        abstractRepository.update(entity);
+    }
+    @Override
+    public E create(E entity) {
+       return abstractRepository.create(entity);
+    }
+
+    @Override
+    public void delete(Long id) throws NoRecordException {
+        abstractRepository.delete(id);
+    }
+
     @Override
     public E get(Long id) throws NoRecordException {
         return abstractRepository.get(id)
-                .orElseThrow(NoRecordException::new);
+                .orElseThrow(()->new NoRecordException("object",id));
     }
 
     @Override
@@ -24,13 +42,5 @@ public abstract class AbstractServiceImpl<E extends BaseEntity>
         return abstractRepository.getAll();
     }
 
-    @Override
-    public void displayInfo(Long id) throws NoRecordException {
-        System.out.println(abstractRepository.get(id).orElseThrow(NoRecordException::new));
-    }
 
-    @Override
-    public List<E> sortByKey() {
-        return null;
-    }
 }
