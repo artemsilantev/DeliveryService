@@ -1,17 +1,16 @@
 package intitalizers;
 
 import api.initializers.Initializer;
-import menu.MenuInitializer;
 
 import java.util.LinkedList;
 import java.util.List;
 
-public class MainInitializer {
-    private static MainInitializer instance;
+public class InitializerHandler {
+    private static InitializerHandler instance;
 
     private List<Initializer> initializers;
 
-    private MainInitializer() {
+    private InitializerHandler() {
         initializers = new LinkedList<>();
         initializers.add(MenuInitializer.getInstance());
         initializers.add(CustomerDataInitializer.getInstance());
@@ -21,12 +20,12 @@ public class MainInitializer {
         initializers.add(OrderDataInitializer.getInstance());
     }
 
-    public static MainInitializer getInstance() {
-        return instance == null ? instance = new MainInitializer()
+    public static InitializerHandler getInstance() {
+        return instance == null ? instance = new InitializerHandler()
                 : instance;
     }
 
-    public void startInitializer(){
+    public void start(){
         initializers.forEach(Initializer::init);
     }
 }

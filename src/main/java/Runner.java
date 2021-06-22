@@ -1,11 +1,11 @@
-import intitalizers.MainInitializer;
+import intitalizers.InitializerHandler;
 import menu.client.MenuClient;
 
 public class Runner {
 
     public static void main(String[] args){
 
-        MainInitializer.getInstance().startInitializer();
+        InitializerHandler.getInstance().start();
         MenuClient.getInstance().run();
     }
 }
