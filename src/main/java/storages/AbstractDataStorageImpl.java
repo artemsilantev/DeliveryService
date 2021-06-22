@@ -12,13 +12,18 @@ public abstract class AbstractDataStorageImpl<E extends BaseEntity> implements A
     private List<E> entities;
 
     @Override
+    public void setSequenceId(Long id) {
+        entityIdSequence = id;
+    }
+
+    @Override
     public List<E> getEntities() {
         return entities;
     }
 
     @Override
     public void setEntities(List<E> entities) {
-       this.entities = entities;
+        this.entities = entities;
     }
 
     @Override
