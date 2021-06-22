@@ -3,7 +3,7 @@ package storages;
 import api.data.ShopItemDataStorage;
 import model.ShopItem;
 
-public class ShopItemDataStorageImpl extends AbstractDataStorageImpl<ShopItem>
+public final class ShopItemDataStorageImpl extends AbstractDataStorageImpl<ShopItem>
         implements ShopItemDataStorage {
     private ShopItemDataStorageImpl() {
     }
@@ -11,9 +11,7 @@ public class ShopItemDataStorageImpl extends AbstractDataStorageImpl<ShopItem>
     private static ShopItemDataStorageImpl instance;
 
     public static ShopItemDataStorageImpl getInstance() {
-        if (instance == null) {
-            instance = new ShopItemDataStorageImpl();
-        }
-        return instance;
+        return instance == null ? instance = new ShopItemDataStorageImpl()
+                :instance;
     }
 }

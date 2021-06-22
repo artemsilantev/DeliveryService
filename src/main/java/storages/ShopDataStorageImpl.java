@@ -3,7 +3,7 @@ package storages;
 import api.data.ShopDataStorage;
 import model.Shop;
 
-public class ShopDataStorageImpl extends AbstractDataStorageImpl<Shop>
+public final class ShopDataStorageImpl extends AbstractDataStorageImpl<Shop>
         implements ShopDataStorage {
     private ShopDataStorageImpl() {
     }
@@ -11,9 +11,7 @@ public class ShopDataStorageImpl extends AbstractDataStorageImpl<Shop>
     private static ShopDataStorageImpl instance;
 
     public static ShopDataStorageImpl getInstance() {
-        if (instance == null) {
-            instance = new ShopDataStorageImpl();
-        }
-        return instance;
+        return instance == null ? instance =new ShopDataStorageImpl()
+                : instance;
     }
 }

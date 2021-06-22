@@ -3,7 +3,7 @@ package storages;
 import api.data.OrderDataStorage;
 import model.Order;
 
-public class OrderDataStorageImpl  extends AbstractDataStorageImpl<Order>
+public final class OrderDataStorageImpl  extends AbstractDataStorageImpl<Order>
     implements OrderDataStorage {
 
 
@@ -13,9 +13,7 @@ public class OrderDataStorageImpl  extends AbstractDataStorageImpl<Order>
     private static  OrderDataStorageImpl instance;
 
     public static OrderDataStorageImpl getInstance() {
-        if (instance == null) {
-            instance = new OrderDataStorageImpl();
-        }
-        return instance;
+        return instance == null ? instance = new OrderDataStorageImpl()
+                : instance;
     }
 }
