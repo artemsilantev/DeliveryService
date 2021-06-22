@@ -7,7 +7,8 @@ import java.util.List;
 
 public interface AbstractService <E extends BaseEntity> {
     E get(Long id) throws NoRecordException;
+    E create(E entity);
+    void update(E entity);
     List<E> getAll();
-    void displayInfo(Long id) throws NoRecordException;
-    List<E> sortByKey();
+    void delete(Long id) throws NoRecordException;
 }
