@@ -56,11 +56,16 @@ public final class AddOrderCommand implements Command {
                         deleteProduct();
                         break;
                     case 3:
-                        if(!confirm()) break;
-                        orderController.add(order);
-                        order = null;
-                        shopItemsToAdd = null;
-                        return;
+                        if(check()){
+                            confirm();
+                            orderController.add(order);
+                            order = null;
+                            shopItemsToAdd = null;
+                            return;
+                        }
+                        else{
+                            break;
+                        }
                     case 4:
                         shopItemsToAdd = null;
                         order = null;
@@ -76,19 +81,28 @@ public final class AddOrderCommand implements Command {
     }
 
 
-    private boolean confirm() throws NoRecordException {
+    private void confirm() throws NoRecordException {
+        List<ShopItem> itemsToDelete = new ArrayList<>(shopItemsToAdd);
+        while (itemsToDelete.size()!=0){
+            ShopItem shopItemToDelete = itemsToDelete.get(0);
+            ShopItem shopItemInData = shopItemController.get(shopItemToDelete.getId());
+            shopItemInData.setAmount(shopItemInData.getAmount()-1);
+            itemsToDelete.remove(0);
+        }
+    }
+
+    private boolean check(){
         List<ShopItem> itemsToDelete = new ArrayList<>(shopItemsToAdd);
         while (itemsToDelete.size()!=0){
             ShopItem shopItemToDelete = itemsToDelete.get(0);
             int amount = Collections.frequency(itemsToDelete, shopItemToDelete);
-            ShopItem shopItemInData = shopItemController.get(shopItemToDelete.getId());
-            if(shopItemInData.getAmount()<amount){
+            if(shopItemToDelete.getAmount()<amount){
                 System.out.printf("\n%s does not have the required quantity of goods (%s)!\n",
                         shopItemToDelete.getShop().getName(),
                         shopItemToDelete.getProduct().getName());
                 return false;
+
             }
-            shopItemInData.setAmount(shopItemInData.getAmount()-amount);
             itemsToDelete.removeIf(shopItem -> shopItem.equals(shopItemToDelete));
         }
         return true;
